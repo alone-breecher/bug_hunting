@@ -2,7 +2,7 @@
 
    if(isset($_GET["commandString"]))   {
      
-     $command_string =$_GET["command_String"];
+     $command_string = $_GET["command_String"];
      
      try {
        
