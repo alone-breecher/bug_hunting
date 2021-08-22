@@ -6,7 +6,7 @@ echo -e "\e[1m\e[32m  / __ \/ / / / __ \ \e[1m\e[31m/ // /_| |/_/ |/_/"
 echo -e "\e[1m\e[32m / /_/ / /_/ / /_/ /\e[1m\e[31m/__  __/>  <_>  <  "
 echo -e "\e[1m\e[32m/_.___/\__, / .___/   \e[1m\e[31m/_/ /_/|_/_/|_|  "
 echo -e "\e[1m\e[32m      /____/_/                        "
-echo -e "by: @lobuhisec \e[0m"
+echo -e "by: @alone_breecher \e[0m"
 echo
 
 #Show usage
