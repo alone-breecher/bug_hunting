@@ -28,16 +28,6 @@ else
 fi
  
  
-echo "${red}
- =================================================
-|   ____  _____  ____ ___  _   _ _                |
-|  |  _ \|___ / / ___/ _ \| \ | (_)_______ _ __   |
-|  | |_) | |_ \| |  | | | |  \| | |_  / _ \ '__|  |
-|  |  _ < ___) | |__| |_| | |\  | |/ /  __/ |     |
-|  |_| \_\____/ \____\___/|_| \_|_/___\___|_|     |
-|                                                 |
- ================== Anon-Artist ==================
-${reset}"
 echo "${blue} [+] Started Content Discovery Scanning ${reset}"
 echo " "
 
@@ -94,8 +84,5 @@ echo " "
 echo "${blue} [+] Succesfully saved the results according to their status codes ${reset}"
 echo " "
 echo "${yellow} ---------------------------------- xxxxxxxx ---------------------------------- ${reset}"
-echo " "
-echo "${red} [+] Thank you for using R3C0Nizer${reset}"
-echo ""
-echo "${yellow} ---------------------------------- xxxxxxxx ---------------------------------- ${reset}"
+
 
