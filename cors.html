@@ -12,8 +12,8 @@
                  document.getElementById("demo").innerHTML = alert(this.responseText);
                  }
              };
-              xhr.open("POST",
-                       "https://www.ozon.ru/api/composer-api.bx/widget/json/v2", true);
+              xhr.open("GET",
+                       "<URL OF API>", true);
              xhr.withCredentials = true;
              xhr.send();
              }
