@@ -83,9 +83,3 @@ echo "${yellow} ---------------------------------- xxxxxxxx --------------------
 echo " "
 echo "${blue} [+] Succesfully saved the results according to their status codes ${reset}"
 echo " "
-echo "${yellow} ---------------------------------- xxxxxxxx ---------------------------------- ${reset}"
-echo " "
-echo "${red} [+] Thank you for using R3C0Nizer${reset}"
-echo ""
-echo "${yellow} ---------------------------------- xxxxxxxx ---------------------------------- ${reset}"
-
