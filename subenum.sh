@@ -8,111 +8,76 @@ blue=`tput setaf 4`
 magenta=`tput setaf 5`
 reset=`tput sgr0`
 
-read -p "Enter the Domain name : " DOM
+usage() {
+    echo "Usage: $0 [-d domain] [-f filename]"
+    exit 1
+}
 
-if [ -d ~/Desktop ]
-then
-  echo " "
-else
-  mkdir ~/Desktop 
+# Parse command-line options
+while getopts ":d:f:" opt; do
+    case $opt in
+        d) DOM=$OPTARG ;;
+        f) FILE=$OPTARG ;;
+        *) usage ;;
+    esac
+done
+
+if [ -z "$DOM" ] && [ -z "$FILE" ]; then
+    usage
 fi
 
-if [ -d ~/Desktop/$DOM ]
-then
-  echo " "
-else
-  mkdir ~/Desktop/$DOM 
+# Function to run subdomain enumeration for a single domain
+run_subdomain_enum() {
+    local domain=$1
+    local output_path=~/Desktop/$domain/Subdomains
+
+    # Create the directory for the domain
+    mkdir -p $output_path
+
+    echo "${blue} [+] Started Subdomain Enumeration for $domain ${reset}"
+    
+    # Assetfinder
+    echo "${magenta} [+] Running Assetfinder ${reset}"
+    assetfinder -subs-only $domain >> $output_path/assetfinder.txt
+
+    # Amass
+    echo "${magenta} [+] Running Amass ${reset}"
+    amass enum --passive -d $domain > $output_path/amass.txt
+
+    # Subfinder
+    echo "${magenta} [+] Running Subfinder ${reset}"
+    subfinder -d $domain -o $output_path/subfinder.txt
+
+    # Fetch unique domains
+    echo "${magenta} [+] Fetching unique subdomains ${reset}"
+    cat $output_path/*.txt | sort -u >> $output_path/unique.txt
+
+    # Sorting alive subdomains using httpx
+    echo "${magenta} [+] Running Httpx for alive subdomains ${reset}"
+    cat $output_path/unique.txt | httpx -ip -cname -td -location -title -wc >> $output_path/all-alive-subs.txt
+    cat $output_path/all-alive-subs.txt | sed 's/http\(.?*\)*:\/\///g' | sort -u > $output_path/more-info-all-alive-subs.txt
+
+     # Sorting alive subdomains using httpx  with more info
+    echo "${magenta} [+] Running Httpx for informations ${reset}"
+    cat $output_path/unique.txt | httpx -sc - >> $output_path/all-alive-subs.txt
+    
+    echo "${blue} [+] Subdomain enumeration completed for $domain ${reset}"
+    echo ""
+
+    # Run Visual Recon using Aquatone
+    echo "${magenta} [+] Running Visual Recon using Aquatone for $domain ${reset}"
+    cat $output_path/all-alive-subs.txt | aquatone -http-timeout 10000 -scan-timeout 300 -ports xlarge -out $output_path/Visual_Recon < $output_path/all-alive-subs.txt
+    echo "${blue} [+] Visual Recon completed and saved in Visual_Recon directory ${reset}"
+}
+
+# If a single domain is provided
+if [ ! -z "$DOM" ]; then
+    run_subdomain_enum $DOM
 fi
 
-if [ -d ~/Desktop/$DOM/Subdomains ]
-then
-  echo " "
-else
-  mkdir ~/Desktop/$DOM/Subdomains 
+# If a file with multiple domains is provided
+if [ ! -z "$FILE" ]; then
+    while IFS= read -r domain; do
+        run_subdomain_enum $domain
+    done < "$FILE"
 fi
-
-
-echo "${blue} [+] Started Subdomain Enumeration ${reset}"
-echo " "
-
-#assefinder
-echo "${yellow} ---------------------------------- xxxxxxxx ---------------------------------- ${reset}"
-echo " "
-if [ -f /usr/bin/assetfinder ]
-then
-  echo "${magenta} [+] Running Assetfinder for subdomain enumeration${reset}"
-  assetfinder -subs-only $DOM  >> ~/Desktop/$DOM/Subdomains/assetfinder.txt 
-else
-  echo "${blue} [+] Installing Assetfinder ${reset}"
-  go get -u github.com/tomnomnom/assetfinder
-  echo "${magenta} [+] Running Assetfinder for subdomain enumeration${reset}"
-  assetfinder -subs-only $DOM  >> ~/Desktop/$DOM/Subdomains/assetfinder.txt
-fi
-echo " "
-echo "${blue} [+] Succesfully saved as assetfinder.txt  ${reset}"
-echo " "
-
-#amass
-echo "${yellow} ---------------------------------- xxxxxxxx ---------------------------------- ${reset}"
-echo " "
-if [ -f /usr/bin/amass ]
-then
-  echo "${magenta} [+] Running Amass for subdomain enumeration${reset}"
-  amass enum --passive -d $DOM > ~/Desktop/$DOM/Subdomains/amass.txt
-else
-  echo "${blue} [+] Installing Amass ${reset}"
-  echo "${blue} [+] This may take few minutes hang tight... ${reset}"
-  go get -u github.com/OWASP/Amass/...
-  echo "${magenta} [+] Running Amass for subdomain enumeration${reset}"
-  amass enum --passive -d $DOM > ~/Desktop/$DOM/Subdomains/amass.txt
-fi
-echo " "
-echo "${blue} [+] Succesfully saved as amass.txt  ${reset}"
-echo " "
-
-#subfinder
-echo "${yellow} ---------------------------------- xxxxxxxx ---------------------------------- ${reset}"
-echo " "
-if [ -f /usr/bin/subfinder ]
-then
-  echo "${magenta} [+] Running Subfinder for subdomain enumeration${reset}"
-  subfinder -d $DOM -o ~/Desktop/$DOM/Subdomains/subfinder.txt 
-else
-  echo "${blue} [+] Installing Subfinder ${reset}"
-  go get -u -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
-  echo "${magenta} [+] Running Subfinder for subdomain enumeration${reset}"
-  subfinder -d $DOM -o ~/Desktop/$DOM/Subdomains/subfinder.txt
-fi
-echo " "
-echo "${blue} [+] Succesfully saved as subfinder.txt  ${reset}"
-echo " "
-
-
-#uniquesubdomains
-echo "${yellow} ---------------------------------- xxxxxxxx ---------------------------------- ${reset}"
-echo " "
-echo "${magenta} [+] Fetching unique domains ${reset}"
-echo " "
-cat ~/Desktop/$DOM/Subdomains/*.txt | sort -u >> ~/Desktop/$DOM/Subdomains/unique.txt
-echo "${blue} [+] Succesfully saved as unique.txt ${reset}"
-echo " "
-
-#sorting alive subdomains
-echo "${yellow} ---------------------------------- xxxxxxxx ---------------------------------- ${reset}"
-echo " "
-if [ -f /usr/local/bin/httpx ]
-then
-  echo "${magenta} [+] Running Httpx for sorting alive subdomains${reset}"
-  cat ~/Desktop/$DOM/Subdomains/unique.txt | httpx >> ~/Desktop/$DOM/Subdomains/all-alive-subs.txt
-  cat ~/Desktop/$DOM/Subdomains/all-alive-subs.txt | sed 's/http\(.?*\)*:\/\///g' | sort -u > ~/Desktop/$DOM/Subdomains/protoless-all-alive-subs.txt
-else
-  echo "${blue} [+] Installing Httpx ${reset}"
-  go get -u github.com/projectdiscovery/httpx/cmd/httpx
-  echo "${magenta} [+] Running Httpx for sorting alive subdomains${reset}"
-  cat ~/Desktop/$DOM/Subdomains/unique.txt | httpx >> ~/Desktop/$DOM/Subdomains/all-alive-subs.txt
-  cat ~/Desktop/$DOM/Subdomains/all-alive-subs.txt | sed 's/http\(.?*\)*:\/\///g' | sort -u > ~/Desktop/$DOM/Subdomains/protoless-all-alive-subs.txt
-fi
-echo " "
-echo "${blue} [+] Successfully saved the results"
-echo " "
-
