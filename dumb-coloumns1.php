@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // SQL query to fetch only 10 users
-$sql = "SELECT * FROM mat_users LIMIT 10";
+$sql = "SELECT * FROM mat_user LIMIT 10";
 $result = $conn->query($sql);
 
 // Display results in a simple HTML table
