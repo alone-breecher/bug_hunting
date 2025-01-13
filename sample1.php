@@ -13,90 +13,147 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to fetch users who registered in 2024
-$sql = "SELECT * FROM mat_user WHERE user_registeredon LIKE '%2024%'"; // Filter for year 2024
+// SQL query to fetch rows where user_registeredon has 2024 or 2025
+$sql = "SELECT * FROM mat_user WHERE user_registeredon LIKE '2024%' OR user_registeredon LIKE '2025%'";
 $result = $conn->query($sql);
 
-// Open file to write the dump
-$file = fopen('mat_user_2024.sql', 'w');
+// Display results in a simple HTML table
+echo "<h2>Users Registered in 2024 or 2025</h2>";
+echo "<table border='1' cellpadding='10'>
+        <tr>
+            <th>User ID</th>
+            <th>User Raw MCode</th>
+            <th>User MCode</th>
+            <th>User DOB</th>
+            <th>User Name</th>
+            <th>User Email</th>
+            <th>User Password</th>
+            <th>User Fairpass</th>
+            <th>User Branch</th>
+            <th>User Status</th>
+            <th>User FB ID</th>
+            <th>User LinkedIn ID</th>
+            <th>User Twitter ID</th>
+            <th>User Registered On</th>
+            <th>User Registered By</th>
+            <th>User Register Through</th>
+            <th>User Last Updated By</th>
+            <th>User Last Updated On</th>
+            <th>User Image Status</th>
+            <th>User Horoscope Status</th>
+            <th>User Image Restriction</th>
+            <th>User Image Restrict Time</th>
+            <th>User Image Lock</th>
+            <th>User Image Lock Time</th>
+            <th>User Last Login</th>
+            <th>User Step</th>
+            <th>User New Step</th>
+            <th>User Page</th>
+            <th>User Is Bill</th>
+            <th>User UCode</th>
+            <th>User Crop</th>
+            <th>User OTP</th>
+            <th>User OTP Status</th>
+            <th>User Mobile Image</th>
+            <th>User Mob Day Reco</th>
+            <th>User Mob My Profile</th>
+            <th>User Mob My Contact</th>
+            <th>User Mob New Match</th>
+            <th>User Mob Photo Match</th>
+            <th>User Mob Shortlist Me</th>
+            <th>User Mob Interest Rem</th>
+            <th>User Mob Photo Reque</th>
+            <th>User Mob Payment</th>
+            <th>User Mob Package Exp</th>
+            <th>User Mob Offer</th>
+            <th>User Mob Groupwise</th>
+            <th>User Mob Pack Exten</th>
+            <th>User Mob Profile Act</th>
+            <th>User Mob Profile Edit</th>
+            <th>User Mob Photo Update</th>
+            <th>User Mob Profile Del</th>
+            <th>User Mob Booster</th>
+            <th>User Mob Privilege</th>
+            <th>User Completeness</th>
+            <th>User Mobile Crop</th>
+            <th>User Daily Recomm Date</th>
+            <th>User Daily Delete</th>
+            <th>User Subscribe</th>
+            <th>User Aadhar</th>
+            <th>User Aadhar Verify</th>
+        </tr>";
 
-// Add the necessary MySQL dump structure (beginning of the dump)
-fwrite($file, "-- MySQL dump of mat_user table (users registered in 2024)\n");
-fwrite($file, "-- Generated on: " . date('Y-m-d H:i:s') . "\n\n");
-
-// Iterate through the result and write INSERT queries to the file
+// Fetch and display the rows
 if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $sql = "INSERT INTO mat_user (user_id, user_raw_mcode, user_mcode, user_dob, user_name, user_email, user_password, user_fairpass, user_branch, user_status, user_fbid, user_linkedinid, user_twitterid, user_registeredon, user_registeredby, user_registerthrough, user_lastupdated_by, user_lastupdated_on, user_image_status, user_horoscope_status, user_image_restriction, user_image_restricttime, user_image_lock, user_image_locktime, user_lastlogin, user_step, user_newstep, user_page, user_isbill, user_ucode, user_crop, user_otp, user_otp_status, user_mobileimage, user_mobdayreco, user_mobmyprofile, user_mobmycontact, user_mobnewmatch, user_mobphotomatch, user_mobshortlistme, user_mobinterestrem, user_mobphotoreque, user_mobpayment, user_mobpackageexp, user_moboffer, user_mobgroupwise, user_mobpackexten, user_mobprofileact, user_mobprofileedit, user_mobphotoupdate, user_mobprofiledel, user_mobbooster, user_mobprivilege, user_completeness, user_mobilecrop, user_dailyrecommdate, user_dailydelete, user_subscribe, user_aadhar, user_aadhar_verify) VALUES ("
-                . "'" . $row['user_id'] . "', "
-                . "'" . $row['user_raw_mcode'] . "', "
-                . "'" . $row['user_mcode'] . "', "
-                . "'" . $row['user_dob'] . "', "
-                . "'" . $row['user_name'] . "', "
-                . "'" . $row['user_email'] . "', "
-                . "'" . $row['user_password'] . "', "
-                . "'" . $row['user_fairpass'] . "', "
-                . "'" . $row['user_branch'] . "', "
-                . "'" . $row['user_status'] . "', "
-                . "'" . $row['user_fbid'] . "', "
-                . "'" . $row['user_linkedinid'] . "', "
-                . "'" . $row['user_twitterid'] . "', "
-                . "'" . $row['user_registeredon'] . "', "
-                . "'" . $row['user_registeredby'] . "', "
-                . "'" . $row['user_registerthrough'] . "', "
-                . "'" . $row['user_lastupdated_by'] . "', "
-                . "'" . $row['user_lastupdated_on'] . "', "
-                . "'" . $row['user_image_status'] . "', "
-                . "'" . $row['user_horoscope_status'] . "', "
-                . "'" . $row['user_image_restriction'] . "', "
-                . "'" . $row['user_image_restricttime'] . "', "
-                . "'" . $row['user_image_lock'] . "', "
-                . "'" . $row['user_image_locktime'] . "', "
-                . "'" . $row['user_lastlogin'] . "', "
-                . "'" . $row['user_step'] . "', "
-                . "'" . $row['user_newstep'] . "', "
-                . "'" . $row['user_page'] . "', "
-                . "'" . $row['user_isbill'] . "', "
-                . "'" . $row['user_ucode'] . "', "
-                . "'" . $row['user_crop'] . "', "
-                . "'" . $row['user_otp'] . "', "
-                . "'" . $row['user_otp_status'] . "', "
-                . "'" . $row['user_mobileimage'] . "', "
-                . "'" . $row['user_mobdayreco'] . "', "
-                . "'" . $row['user_mobmyprofile'] . "', "
-                . "'" . $row['user_mobmycontact'] . "', "
-                . "'" . $row['user_mobnewmatch'] . "', "
-                . "'" . $row['user_mobphotomatch'] . "', "
-                . "'" . $row['user_mobshortlistme'] . "', "
-                . "'" . $row['user_mobinterestrem'] . "', "
-                . "'" . $row['user_mobphotoreque'] . "', "
-                . "'" . $row['user_mobpayment'] . "', "
-                . "'" . $row['user_mobpackageexp'] . "', "
-                . "'" . $row['user_moboffer'] . "', "
-                . "'" . $row['user_mobgroupwise'] . "', "
-                . "'" . $row['user_mobpackexten'] . "', "
-                . "'" . $row['user_mobprofileact'] . "', "
-                . "'" . $row['user_mobprofileedit'] . "', "
-                . "'" . $row['user_mobphotoupdate'] . "', "
-                . "'" . $row['user_mobprofiledel'] . "', "
-                . "'" . $row['user_mobbooster'] . "', "
-                . "'" . $row['user_mobprivilege'] . "', "
-                . "'" . $row['user_completeness'] . "', "
-                . "'" . $row['user_mobilecrop'] . "', "
-                . "'" . $row['user_dailyrecommdate'] . "', "
-                . "'" . $row['user_dailydelete'] . "', "
-                . "'" . $row['user_subscribe'] . "', "
-                . "'" . $row['user_aadhar'] . "', "
-                . "'" . $row['user_aadhar_verify'] . "');\n";
-
-        fwrite($file, $sql);
+    while($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td>" . $row["user_id"] . "</td>
+                <td>" . $row["user_raw_mcode"] . "</td>
+                <td>" . $row["user_mcode"] . "</td>
+                <td>" . $row["user_dob"] . "</td>
+                <td>" . $row["user_name"] . "</td>
+                <td>" . $row["user_email"] . "</td>
+                <td>" . $row["user_password"] . "</td>
+                <td>" . $row["user_fairpass"] . "</td>
+                <td>" . $row["user_branch"] . "</td>
+                <td>" . $row["user_status"] . "</td>
+                <td>" . $row["user_fbid"] . "</td>
+                <td>" . $row["user_linkedinid"] . "</td>
+                <td>" . $row["user_twitterid"] . "</td>
+                <td>" . $row["user_registeredon"] . "</td>
+                <td>" . $row["user_registeredby"] . "</td>
+                <td>" . $row["user_registerthrough"] . "</td>
+                <td>" . $row["user_lastupdated_by"] . "</td>
+                <td>" . $row["user_lastupdated_on"] . "</td>
+                <td>" . $row["user_image_status"] . "</td>
+                <td>" . $row["user_horoscope_status"] . "</td>
+                <td>" . $row["user_image_restriction"] . "</td>
+                <td>" . $row["user_image_restricttime"] . "</td>
+                <td>" . $row["user_image_lock"] . "</td>
+                <td>" . $row["user_image_locktime"] . "</td>
+                <td>" . $row["user_lastlogin"] . "</td>
+                <td>" . $row["user_step"] . "</td>
+                <td>" . $row["user_newstep"] . "</td>
+                <td>" . $row["user_page"] . "</td>
+                <td>" . $row["user_isbill"] . "</td>
+                <td>" . $row["user_ucode"] . "</td>
+                <td>" . $row["user_crop"] . "</td>
+                <td>" . $row["user_otp"] . "</td>
+                <td>" . $row["user_otp_status"] . "</td>
+                <td>" . $row["user_mobileimage"] . "</td>
+                <td>" . $row["user_mobdayreco"] . "</td>
+                <td>" . $row["user_mobmyprofile"] . "</td>
+                <td>" . $row["user_mobmycontact"] . "</td>
+                <td>" . $row["user_mobnewmatch"] . "</td>
+                <td>" . $row["user_mobphotomatch"] . "</td>
+                <td>" . $row["user_mobshortlistme"] . "</td>
+                <td>" . $row["user_mobinterestrem"] . "</td>
+                <td>" . $row["user_mobphotoreque"] . "</td>
+                <td>" . $row["user_mobpayment"] . "</td>
+                <td>" . $row["user_mobpackageexp"] . "</td>
+                <td>" . $row["user_moboffer"] . "</td>
+                <td>" . $row["user_mobgroupwise"] . "</td>
+                <td>" . $row["user_mobpackexten"] . "</td>
+                <td>" . $row["user_mobprofileact"] . "</td>
+                <td>" . $row["user_mobprofileedit"] . "</td>
+                <td>" . $row["user_mobphotoupdate"] . "</td>
+                <td>" . $row["user_mobprofiledel"] . "</td>
+                <td>" . $row["user_mobbooster"] . "</td>
+                <td>" . $row["user_mobprivilege"] . "</td>
+                <td>" . $row["user_completeness"] . "</td>
+                <td>" . $row["user_mobilecrop"] . "</td>
+                <td>" . $row["user_dailyrecommdate"] . "</td>
+                <td>" . $row["user_dailydelete"] . "</td>
+                <td>" . $row["user_subscribe"] . "</td>
+                <td>" . $row["user_aadhar"] . "</td>
+                <td>" . $row["user_aadhar_verify"] . "</td>
+              </tr>";
     }
-    echo "Data dumped successfully to 'mat_user_2024.sql'.";
+    echo "</table>";
 } else {
     echo "0 results found.";
 }
 
-// Close file and connection
-fclose($file);
+// Close connection
 $conn->close();
 ?>
