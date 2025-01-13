@@ -13,7 +13,7 @@ if (!$con) {
 mysql_select_db($database) or die("Database selection failed: " . mysql_error());
 
 // Fetch data from mat_staff table
-$table = "mat_m_sms";
+$table = "mat_mobilecrop";
 echo "<h2>Table: $table</h2>";
 $result = mysql_query("SELECT * FROM $table") or die("Error fetching data from $table: " . mysql_error());
 
