@@ -13,12 +13,12 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to fetch only 10 users
+// SQL query to fetch only 10 users from mat_user table
 $sql = "SELECT * FROM mat_user LIMIT 10";
 $result = $conn->query($sql);
 
 // Display results in a simple HTML table
-echo "<h2>First 10 Users from mat_users</h2>";
+echo "<h2>First 10 Users from mat_user Table</h2>";
 echo "<table border='1' cellpadding='10'>
         <tr>
             <th>User ID</th>
