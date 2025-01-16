@@ -1,5 +1,5 @@
 <?php
-$host = 'localhost'; // Change this if the MySQL server is on a different host
+$host = '127.0.0.1'; // Change this if the MySQL server is on a different host
 $user = 'matrimonial_new';
 $password = 'SKaCS10R#33sTr';
 
