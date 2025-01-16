@@ -58,6 +58,11 @@ if (isset($_GET['view'])) {
     <div class="container">
         <h1>Directory Browser</h1>
         <p>Current Directory: <?php echo htmlspecialchars($currentDir); ?></p>
+        <p>
+            <?php if ($currentDir != getcwd()): ?>
+                <a href="?dir=<?php echo urlencode(dirname($currentDir)); ?>">Go Up</a>
+            <?php endif; ?>
+        </p>
         <?php listDirectory($currentDir); ?>
     </div>
 </body>
