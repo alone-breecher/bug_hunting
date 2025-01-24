@@ -4,6 +4,8 @@ $host = "10.6.0.3";
 $username = "matrimonial_new";
 $password = "SKaCS10R#33sTr";
 $database = "matrimonials";
+$table = "mi_members";
+$outputFile = "mi_members_dump.csv";
 
 // Connect to the database server
 $con = @mysqli_connect($host, $username, $password);
@@ -17,38 +19,36 @@ if (!mysqli_select_db($con, $database)) {
     die("Failed to select database '$database': " . mysqli_error($con));
 }
 
+// Open a file for writing the CSV
+$file = fopen($outputFile, "w");
+if (!$file) {
+    die("Failed to create the output file.");
+}
+
 // Query to retrieve all rows from the `mi_members` table
-$query = "SELECT * FROM mi_members";
+$query = "SELECT * FROM $table";
 $result = mysqli_query($con, $query);
 
 if ($result) {
-    echo "<h2>Contents of Table: mi_members</h2>";
-    
-    // Display the table contents in an HTML table
-    echo "<table border='1' cellpadding='5' cellspacing='0'>";
-    echo "<tr>";
-    
-    // Fetch and display column names
+    // Fetch column names and write them as the first row in the CSV
     $fields = mysqli_fetch_fields($result);
+    $header = [];
     foreach ($fields as $field) {
-        echo "<th>" . htmlspecialchars($field->name) . "</th>";
+        $header[] = $field->name;
     }
-    echo "</tr>";
-    
-    // Fetch and display rows
+    fputcsv($file, $header);
+
+    // Fetch rows and write them to the CSV file
     while ($row = mysqli_fetch_assoc($result)) {
-        echo "<tr>";
-        foreach ($row as $cell) {
-            echo "<td>" . htmlspecialchars($cell) . "</td>";
-        }
-        echo "</tr>";
+        fputcsv($file, $row);
     }
-    
-    echo "</table>";
+
+    echo "Data successfully exported to $outputFile.";
 } else {
     echo "Error retrieving table contents: " . mysqli_error($con);
 }
 
-// Close the connection
+// Close the file and database connection
+fclose($file);
 mysqli_close($con);
 ?>
