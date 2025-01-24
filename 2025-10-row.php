@@ -28,7 +28,7 @@ if (!$result) {
 
 // Display the HTML header
 echo "<html><body>";
-echo "<h2>Viewing First 10 Rows of Table: $table</h2>";
+echo "<h2>Users with Last Login in 2025</h2>";
 echo "<table border='1' cellpadding='5' cellspacing='0'>";
 echo "<tr>";
 
@@ -38,8 +38,8 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 echo "</tr>";
 
-// Fetch the first 10 rows
-$query = "SELECT * FROM $table LIMIT 10";
+// Fetch the users where last_login_date contains '2025'
+$query = "SELECT * FROM $table WHERE last_login_date LIKE '2025%' LIMIT 10";
 $result = mysqli_query($con, $query);
 
 if ($result && mysqli_num_rows($result) > 0) {
@@ -51,7 +51,7 @@ if ($result && mysqli_num_rows($result) > 0) {
         echo "</tr>";
     }
 } else {
-    echo "<tr><td colspan='100'>No data found.</td></tr>";
+    echo "<tr><td colspan='100'>No users found with last login in 2025.</td></tr>";
 }
 
 // Close the table and the HTML page
