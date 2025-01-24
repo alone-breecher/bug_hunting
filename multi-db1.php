@@ -1,19 +1,19 @@
 <?php
 // Database credentials
-$host = "209.61.238.73";
-$username = "milogin";
-$password = "RajD}25]w1";
+$host = "10.6.0.3";
+$username = "matrimonial_new";
+$password = "SKaCS10R#33sTr";
 
-// Attempt to connect to the database server
-$conn = @mysqli_connect($host, $username, $password);
+// Connect to the database server
+$con = @mysqli_connect($host, $username, $password);
 
-if (!$conn) {
+if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
 // Query to list all databases
 $query = "SHOW DATABASES";
-$result = mysqli_query($conn, $query);
+$result = mysqli_query($con, $query);
 
 if ($result) {
     echo "<h2>Databases on the Server</h2>";
@@ -23,9 +23,9 @@ if ($result) {
     }
     echo "</ul>";
 } else {
-    echo "Failed to list databases: " . mysqli_error($conn);
+    echo "Error retrieving databases: " . mysqli_error($con);
 }
 
 // Close the connection
-mysqli_close($conn);
+mysqli_close($con);
 ?>
