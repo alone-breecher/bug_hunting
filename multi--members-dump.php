@@ -6,6 +6,7 @@ $password = "SKaCS10R#33sTr";
 $database = "matrimonials";
 $table = "mi_members";
 $outputFile = "mi_members_dump.csv";
+$chunkSize = 1000; // Number of rows to process per batch
 
 // Connect to the database server
 $con = @mysqli_connect($host, $username, $password);
@@ -25,28 +26,37 @@ if (!$file) {
     die("Failed to create the output file.");
 }
 
-// Query to retrieve all rows from the `mi_members` table
-$query = "SELECT * FROM $table";
+// Get column names for the table
+$query = "SHOW COLUMNS FROM $table";
 $result = mysqli_query($con, $query);
 
 if ($result) {
-    // Fetch column names and write them as the first row in the CSV
-    $fields = mysqli_fetch_fields($result);
     $header = [];
-    foreach ($fields as $field) {
-        $header[] = $field->name;
+    while ($row = mysqli_fetch_assoc($result)) {
+        $header[] = $row['Field'];
     }
     fputcsv($file, $header);
-
-    // Fetch rows and write them to the CSV file
-    while ($row = mysqli_fetch_assoc($result)) {
-        fputcsv($file, $row);
-    }
-
-    echo "Data successfully exported to $outputFile.";
 } else {
-    echo "Error retrieving table contents: " . mysqli_error($con);
+    die("Error fetching column names: " . mysqli_error($con));
 }
+
+// Fetch and write data in chunks
+$offset = 0;
+do {
+    $query = "SELECT * FROM $table LIMIT $chunkSize OFFSET $offset";
+    $result = mysqli_query($con, $query);
+    
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            fputcsv($file, $row);
+        }
+        $offset += $chunkSize;
+    } else {
+        break; // No more rows to process
+    }
+} while (true);
+
+echo "Data successfully exported to $outputFile.";
 
 // Close the file and database connection
 fclose($file);
