@@ -4,7 +4,7 @@ $host = "10.6.0.3";
 $username = "matrimonial_new";
 $password = "SKaCS10R#33sTr";
 $database = "matrimonials";
-$table = "email_tbl"; // Table to dump
+$table = "state_city"; // Table to dump
 $chunkSize = 1000; // Number of rows to process per batch
 $outputFile = "$table.csv"; // Output file name
 
