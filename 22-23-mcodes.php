@@ -13,37 +13,31 @@ if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// SQL query to fetch the first 10 rows from the table mat_user
-$query = "SELECT * FROM mat_user LIMIT 10";
+// SQL query to fetch the user_mcode column where user_registeredon contains 2022 or 2023
+$query = "SELECT user_mcode FROM mat_user WHERE user_registeredon LIKE '%2022%' OR user_registeredon LIKE '%2023%' ORDER BY user_registeredon";
 
 // Execute the query
 $result = mysqli_query($con, $query);
 
 // Check if the query returned any results
 if (mysqli_num_rows($result) > 0) {
-    // Display the rows in an HTML table
-    echo "<table border='1'>";
-    echo "<tr>";
+    // File to save the results
+    $filename = "user-22-23-mcode.txt";
+    $file = fopen($filename, "w");
 
-    // Fetch column names dynamically
-    while ($field = mysqli_fetch_field($result)) {
-        echo "<th>" . htmlspecialchars($field->name) . "</th>";
+    if (!$file) {
+        die("Failed to create or open the file.");
     }
 
-    echo "</tr>";
-
-    // Fetch rows and display them
+    // Fetch the rows and write each user_mcode to the file
     while ($row = mysqli_fetch_assoc($result)) {
-        echo "<tr>";
-        foreach ($row as $column) {
-            echo "<td>" . htmlspecialchars($column) . "</td>";
-        }
-        echo "</tr>";
+        fwrite($file, $row['user_mcode'] . PHP_EOL);
     }
 
-    echo "</table>";
+    fclose($file);
+    echo "Data successfully dumped into $filename";
 } else {
-    echo "No rows found in the table.";
+    echo "No matching records found.";
 }
 
 // Close the database connection
