@@ -1,0 +1,21 @@
+POST /verifylogin HTTP/1.1
+Host: admissions.brilliantpala.org
+Cookie: ci_session=a%3A5%3A%7Bs%3A10%3A%22session_id%22%3Bs%3A32%3A%22331baaca27294b0aa7ab19f324fe9d4e%22%3Bs%3A10%3A%22ip_address%22%3Bs%3A13%3A%22103.85.207.76%22%3Bs%3A10%3A%22user_agent%22%3Bs%3A70%3A%22Mozilla%2F5.0%20%28X11%3B%20Linux%20x86_64%3B%20rv%3A128.0%29%20Gecko%2F20100101%20Firefox%2F128.0%22%3Bs%3A13%3A%22last_activity%22%3Bi%3A1743236259%3Bs%3A9%3A%22user_data%22%3Bs%3A0%3A%22%22%3B%7D14fc703f4cf4cc3646ba18abc5dfbfe05cad5046; _gcl_au=1.1.1034393351.1743236260
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 52
+Origin: https://admissions.brilliantpala.org
+Referer: https://admissions.brilliantpala.org/
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
+Priority: u=0, i
+Te: trailers
+Connection: keep-alive
+
+username=asdcvf&password=wqsdefrgt&cid=&submit=Login
